@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Class | Welcome</title>
+    <style>
+        body { margin: 0; background: linear-gradient(135deg, #667eea, #764ba2); height: 100vh; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: white; }
+        .hero { text-align: center; background: rgba(255,255,255,0.1); padding: 50px; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+        .btn { padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; margin: 10px; display: inline-block; transition: 0.3s; }
+        .btn-white { background: white; color: #764ba2; }
+        .btn-outline { border: 2px solid white; color: white; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Smart Class AI</h1>
+        <p>The future of classroom intelligence starts here.</p>
+        <div style="margin-top: 30px;">
+            <a href="{% url 'login_page' %}" class="btn btn-white">Login</a>
+            <a href="{% url 'register_page' %}" class="btn btn-outline">Join Now</a>
+        </div>
+    </div>
+</body>
+</html>
