@@ -1,23 +1,191 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Smart Class | Welcome</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDU-TZ AI | The National Digital Brain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    
     <style>
-        body { margin: 0; background: linear-gradient(135deg, #667eea, #764ba2); height: 100vh; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: white; }
-        .hero { text-align: center; background: rgba(255,255,255,0.1); padding: 50px; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
-        .btn { padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; margin: 10px; display: inline-block; transition: 0.3s; }
-        .btn-white { background: white; color: #764ba2; }
-        .btn-outline { border: 2px solid white; color: white; }
+        :root {
+            --glass-white: rgba(255, 255, 255, 0.12);
+            --liquid-blur: blur(25px);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #0a0a0a;
+            color: white;
+            scroll-behavior: smooth;
+        }
+        
+        .serif { font-family: 'Playfair Display', serif; }
+
+        /* Cluely-style Liquid Glass */
+        .liquid-glass {
+            background: var(--glass-white);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Background Image Layers */
+        .bg-hero {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)), 
+                        url('CITY_IMAGE_URL'); /* Insert Dar Skyline Image Here */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Fade Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cluely-gradient-text {
+            background: linear-gradient(120deg, #ffffff 30%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Floating Animation */
+        .floating {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
     </style>
 </head>
-<body>
-    <div class="hero">
-        <h1>Smart Class AI</h1>
-        <p>The future of classroom intelligence starts here.</p>
-        <div style="margin-top: 30px;">
-            <a href="{% url 'login_page' %}" class="btn btn-white">Login</a>
-            <a href="{% url 'register_page' %}" class="btn btn-outline">Join Now</a>
+<body class="bg-hero min-h-screen">
+
+    <!-- Navigation (Floating Glass) -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl">
+        <div class="liquid-glass rounded-full px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                    <span class="text-blue-900 font-bold text-xs">TZ</span>
+                </div>
+                <span class="font-semibold tracking-widest text-sm">EDU-TZ AI</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-[11px] uppercase tracking-widest font-bold opacity-80">
+                <a href="#" class="hover:opacity-100 transition">Curriculum</a>
+                <a href="#" class="hover:opacity-100 transition">Offline Edge</a>
+                <a href="#" class="hover:opacity-100 transition">Data Policy</a>
+            </div>
+            <a href="{% url 'login_page' %}" class="bg-white text-black px-5 py-2 rounded-full text-xs font-bold hover:bg-opacity-90 transition">
+                Login
+            </a>
         </div>
-    </div>
+    </nav>
+
+    <!-- Section 1: Hero -->
+    <section class="relative h-screen flex flex-col items-center justify-center text-center px-6">
+        <div class="fade-in max-w-4xl">
+            <h1 class="serif text-6xl md:text-8xl mb-6 cluely-gradient-text">
+                #1 Undetectable AI <br> <span class="italic">for Classrooms</span>
+            </h1>
+            <p class="text-lg md:text-xl opacity-80 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
+                Localized for the Swahili context. EDU-TZ AI takes perfect notes and solves the "Digital Divide" with offline-first logic.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="{% url 'register_page' %}" class="bg-white text-blue-900 px-10 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:scale-105 transition">
+                    Get Started Free
+                </a>
+                <span class="text-xs opacity-50 uppercase tracking-widest font-bold italic">NECTA / TIE Certified</span>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 animate-bounce opacity-30">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
+
+    <!-- Section 2: Inclusivity (Zanzibar Backdrop) -->
+    <section class="relative py-32 px-6 bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('ZANZIBAR_IMAGE_URL');">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            <div class="fade-in">
+                <h2 class="serif text-5xl mb-8">Bridging the <br><span class="italic text-blue-300">Digital Divide</span></h2>
+                <div class="space-y-6">
+                    <div class="liquid-glass p-6 rounded-3xl">
+                        <h4 class="font-bold text-blue-300 mb-2">Offline Innovation</h4>
+                        <p class="text-sm opacity-70">Running on Raspberry Pi local servers, ensuring students in remote villages have access to a world-class tutor 24/7—no internet required.</p>
+                    </div>
+                    <div class="liquid-glass p-6 rounded-3xl">
+                        <h4 class="font-bold text-blue-300 mb-2">Swahili Core</h4>
+                        <p class="text-sm opacity-70">The first AI engine that truly understands the nuances of the Swahili language in a technical educational context.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Visual Mockup (Floating) -->
+            <div class="fade-in floating">
+                <div class="liquid-glass rounded-[40px] p-8 aspect-video flex flex-col justify-center">
+                    <div class="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
+                        <p class="text-xs font-mono opacity-50 mb-2">QUERY: Tanzanian History</p>
+                        <p class="text-sm italic">"Explain the significance of the 1964 Union in Swahili..."</p>
+                    </div>
+                    <div class="bg-blue-600/20 p-6 rounded-2xl border border-blue-400/30">
+                        <p class="text-xs font-mono text-blue-300 mb-2">EDU-TZ RESPONSE</p>
+                        <p class="text-sm">"Mapinduzi ya Zanzibar ya mwaka 1964 yalipelekea kuungana kwa Tanganyika na Zanzibar..."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: National Policy (Safari Backdrop) -->
+    <section class="relative py-32 px-6 bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('SAFARI_IMAGE_URL');">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="fade-in">
+                <span class="text-xs font-bold uppercase tracking-[0.3em] text-blue-400 mb-4 block">National Alignment</span>
+                <h2 class="serif text-5xl mb-12">Built for the <br><span class="italic">2026 AI Policy</span></h2>
+                <div class="grid md:grid-cols-2 gap-8 text-left">
+                    <div class="liquid-glass p-10 rounded-3xl border-t-4 border-white">
+                        <h3 class="text-xl font-bold mb-4">Ethical Data</h3>
+                        <p class="text-sm opacity-60 leading-relaxed">Protecting Tanzanian student data within national borders, complying with the latest government data sovereignty guidelines.</p>
+                    </div>
+                    <div class="liquid-glass p-10 rounded-3xl border-t-4 border-blue-400">
+                        <h3 class="text-xl font-bold mb-4">Competence Based</h3>
+                        <p class="text-sm opacity-60 leading-relaxed">Coaching students toward critical thinking rather than simple answer-generation, mirroring the TIE curriculum goals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center opacity-30 text-[10px] uppercase tracking-widest">
+        &copy; 2026 EDU-TZ National AI Project | Ministry of Education Support Concept
+    </footer>
+
+    <script>
+        // Cluely-style Scroll Observer
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+    </script>
 </body>
 </html>

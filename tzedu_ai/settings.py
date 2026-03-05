@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file with explicit path
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +30,7 @@ SECRET_KEY = 'django-insecure-*aeqkbn$_5elr^2ngvoajlkl$h&+hh!jbe#n@mn+4=ih*b_=hr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # For development only. Use specific hosts in production
 
 
 # Application definition
@@ -169,3 +174,4 @@ LOGIN_URL = 'login_page'
 
 ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
 
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')

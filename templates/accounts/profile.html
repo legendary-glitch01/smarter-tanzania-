@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDU-TZ AI | Profile</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #0a0a0a;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* The Liquid Ocean Background */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), 
+                        url('https://images.unsplash.com/photo-1537726235470-8504e3beef77?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(35px) saturate(200%);
+            -webkit-backdrop-filter: blur(35px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-orb {
+            background: linear-gradient(135deg, #ffffff 0%, #3b82f6 100%);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .serif { font-family: 'Playfair Display', serif; }
+
+        .fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .data-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center py-12 px-6">
+    <div class="bg-layer"></div>
+
+    <!-- Navigation Pill -->
+    <nav class="liquid-glass rounded-full px-6 py-3 mb-12 flex items-center gap-8 fade-in">
+        <div class="flex items-center gap-2">
+            <div class="w-6 h-6 bg-white rounded-md flex items-center justify-center">
+                <span class="text-blue-900 font-bold text-[10px]">TZ</span>
+            </div>
+            <span class="text-xs font-bold tracking-widest">EDU-TZ</span>
+        </div>
+        <a href="{% url 'chat_dashboard' %}" class="text-[10px] font-bold uppercase tracking-widest hover:text-blue-400 transition">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+        </a>
+    </nav>
+
+    <main class="w-full max-w-4xl fade-in">
+        <!-- Profile Layout Grid -->
+        <div class="grid lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column: Identity Orb -->
+            <div class="lg:col-span-1 flex flex-col gap-6">
+                <div class="liquid-glass p-10 rounded-[40px] text-center">
+                    <div class="relative inline-block mb-6">
+                        <div class="w-32 h-32 rounded-full profile-orb flex items-center justify-center text-4xl font-bold text-white shadow-2xl">
+                            {{ user.username|first|upper }}
+                        </div>
+                        <div class="absolute bottom-1 right-1 w-8 h-8 bg-green-500 border-4 border-black rounded-full flex items-center justify-center" title="Verified Policy User">
+                            <i class="fas fa-check text-[10px] text-white"></i>
+                        </div>
+                    </div>
+                    <h1 class="serif text-3xl mb-1 tracking-tight">{{ user.username }}</h1>
+                    <p class="text-blue-400 text-[11px] font-bold uppercase tracking-[0.2em]">National AI Explorer</p>
+                    
+                    <div class="mt-8 pt-8 border-t border-white/10 flex justify-around">
+                        <div class="text-center">
+                            <p class="text-xl font-bold">12</p>
+                            <p class="data-label">Sessions</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-xl font-bold">4</p>
+                            <p class="data-label">Quizzes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="{% url 'logout' %}" class="bg-red-500/20 hover:bg-red-500/40 border border-red-500/30 text-red-200 py-4 rounded-2xl text-center text-xs font-bold uppercase tracking-widest transition-all">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Terminate Session
+                </a>
+            </div>
+
+            <!-- Right Column: Information Cards -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- Section 1: Official Data -->
+                <div class="liquid-glass p-8 md:p-10 rounded-[40px]">
+                    <h2 class="serif text-2xl mb-8 flex items-center gap-3">
+                        <i class="fas fa-id-card text-blue-400 text-sm"></i> Credentials
+                    </h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-y-10 gap-x-12">
+                        <div>
+                            <p class="data-label mb-2">Primary Username</p>
+                            <p class="text-lg font-semibold">{{ user.username }}</p>
+                        </div>
+                        <div>
+                            <p class="data-label mb-2">Registered Email</p>
+                            <p class="text-lg font-semibold">{{ user.email }}</p>
+                        </div>
+                        <div>
+                            <p class="data-label mb-2">Full Legal Name</p>
+                            <p class="text-lg font-semibold">
+                                {{ user.first_name|default:"Not" }} {{ user.last_name|default:"Configured" }}
+                            </p>
+                        </div>
+                        <div>
+                            <p class="data-label mb-2">Date of Accession</p>
+                            <p class="text-lg font-semibold">{{ user.date_joined|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Policy Compliance -->
+                <div class="liquid-glass p-8 md:p-10 rounded-[40px] border-l-4 border-l-blue-500">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="serif text-2xl flex items-center gap-3">
+                            <i class="fas fa-shield-halved text-blue-400 text-sm"></i> Data Sovereignty
+                        </h2>
+                        <span class="bg-blue-500 text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Active</span>
+                    </div>
+                    
+                    <p class="text-sm opacity-60 leading-relaxed italic mb-6">
+                        "This account is governed by the January 2026 National Guidelines for AI in Education. Your data remains on local Tanzanian servers."
+                    </p>
+
+                    <div class="flex gap-4">
+                        <div class="flex-1 p-4 rounded-2xl bg-white/5 border border-white/5 text-[10px] font-bold uppercase tracking-widest opacity-60">
+                            Encryption: AES-256
+                        </div>
+                        <div class="flex-1 p-4 rounded-2xl bg-white/5 border border-white/5 text-[10px] font-bold uppercase tracking-widest opacity-60">
+                            Sync: Raspberry Pi Edge
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="{% url 'chat_dashboard' %}" class="inline-block bg-white text-blue-900 px-12 py-4 rounded-2xl font-bold text-sm shadow-2xl hover:scale-105 transition-all">
+                        Resume Learning Journey
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-20 opacity-30 text-[9px] uppercase tracking-[0.5em]">
+        National AI Ecosystem © 2026 Secure Access
+    </footer>
+</body>
+</html>

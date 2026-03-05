@@ -6,7 +6,10 @@ from .models import User, Profile
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance, registration_method='email')
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    else:
+        # Ensure profile exists even if signal didn't fire on creation
+        if not hasattr(instance, 'profile') or instance.profile is None:
+            try:
+                Profile.objects.get(user=instance)
+            except Profile.DoesNotExist:
+                Profile.objects.create(user=instance, registration_method='email')

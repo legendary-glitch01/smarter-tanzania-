@@ -3,130 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Class AI | Chat</title>
+    <title>EDU-TZ AI | Digital Brain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        :root {
-            --bg-color: #131314;
-            --surface-color: #1e1f20;
-            --text-color: #e3e3e3;
-            --accent-blue: #4285f4;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background-color: var(--bg-color); 
-            color: var(--text-color);
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+        body { font-family: 'Inter', sans-serif; background-color: #7a7d91; color: white; height: 100vh; overflow: hidden; }
+        .serif { font-family: 'Playfair Display', serif; }
+        
+        /* Ultra Glassy Cards */
+        .glass-bubble {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* Top Bar */
-        nav {
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .user-bubble {
+            background: rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        .logo { font-size: 1.2rem; font-weight: 500; color: #8e918f; }
 
-        /* Profile & Logout Menu */
-        .profile-area { position: relative; }
-        .user-avatar {
-            width: 40px; height: 40px;
-            background: var(--accent-blue);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .logout-dropdown {
-            display: none;
-            position: absolute;
-            top: 50px;
-            right: 0;
-            background: #282a2c;
-            min-width: 150px;
-            border-radius: 8px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            z-index: 100;
-        }
-        .logout-dropdown a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 14px;
-        }
-        .logout-dropdown a:hover { background: #3c4043; border-radius: 8px; }
-        .profile-area:hover .logout-dropdown { display: block; }
+        /* Thinking Animation (Boxless) */
+        .thinking-dots { display: flex; gap: 4px; padding: 10px; }
+        .dot { width: 5px; height: 5px; background: white; border-radius: 50%; opacity: 0.3; animation: pulse 1.4s infinite; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
 
-        /* Center Content */
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 800px;
-            margin: 0 auto;
-            width: 90%;
-        }
-        .welcome-title {
-            font-size: 3.5rem;
-            font-weight: 500;
-            margin-bottom: 40px;
-            background: linear-gradient(to right, #4285f4, #9b72cb, #d96570);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-        }
-        .search-box {
-            width: 100%;
-            background: var(--surface-color);
-            border: 1px solid #444746;
-            border-radius: 30px;
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-        }
-        .search-box input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.1rem;
-            padding: 10px;
-            outline: none;
-        }
-        .icon { font-size: 1.5rem; cursor: pointer; opacity: 0.7; }
+        .custom-scroll::-webkit-scrollbar { width: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
     </style>
 </head>
-<body>
-    <nav>
-        <div class="logo">Smart Class 1.0</div>
-        <div class="profile-area">
-            <div class="user-avatar">{{ user.username|first|upper }}</div>
-            <div class="logout-dropdown">
-                <a href="{% url 'user_profile' %}">Profile</a>
-                <a href="{% url 'logout' %}">Sign Out</a>
+<body class="flex">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-80 glass-bubble m-4 rounded-[35px] flex flex-col border-none shadow-2xl">
+        <div class="p-10">
+            <div class="flex items-center gap-4 mb-12">
+                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-xl">
+                    <span class="text-[#7a7d91] font-extrabold text-xl">TZ</span>
+                </div>
+                <h2 class="serif italic text-2xl tracking-tighter">EDU-TZ</h2>
+            </div>
+            
+            <nav class="space-y-4">
+                <a href="{% url 'chat_dashboard' %}" class="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white/10 font-bold text-xs uppercase tracking-widest transition hover:bg-white/20">
+                    <i class="fas fa-plus"></i> New Module
+                </a>
+                <a href="/" class="flex items-center gap-3 px-6 py-3 rounded-xl opacity-60 hover:opacity-100 transition text-xs">
+                    <i class="fas fa-home"></i> Landing Page
+                </a>
+            </nav>
+        </div>
+
+        <div class="flex-1 px-8 overflow-y-auto custom-scroll">
+            <p class="text-[9px] uppercase tracking-[0.3em] opacity-30 mb-6 px-2 font-bold">Recent Studies</p>
+            <div class="space-y-2 text-xs opacity-60">
+                <div class="p-3 rounded-xl hover:bg-white/5 cursor-pointer">NECTA Form 4 History</div>
+                <div class="p-3 rounded-xl hover:bg-white/5 cursor-pointer">Swahili Literature</div>
             </div>
         </div>
-    </nav>
 
-    <main>
-        <h1 class="welcome-title">Hello, {{ user.username }}</h1>
-        <div class="search-box">
-            <input type="text" placeholder="Enter a prompt here...">
-            <div class="icon">✦</div>
+        <!-- Sidebar Profile Footer -->
+        <div class="p-8 mt-auto border-t border-white/5">
+            <a href="{% url 'user_profile' %}" class="flex items-center gap-3 p-4 rounded-2xl hover:bg-white/5 transition">
+                <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold">{{ user.username|first|upper }}</div>
+                <div class="text-left">
+                    <p class="text-xs font-bold">{{ user.username }}</p>
+                    <p class="text-[9px] opacity-40 uppercase tracking-widest">Active ID</p>
+                </div>
+            </a>
         </div>
-        <p style="margin-top: 20px; color: #8e918f; font-size: 0.8rem;">
-            Smart Class AI can provide information about your courses and help you study.
-        </p>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 flex flex-col relative px-4 py-4">
+        
+        <header class="h-16 flex items-center justify-between px-10">
+            <div class="text-[9px] font-bold tracking-[0.4em] opacity-40 uppercase italic">National Ecosystem v1.5</div>
+            <!-- Profile Button Activated -->
+            <a href="{% url 'user_profile' %}" class="flex items-center gap-3 glass-bubble px-4 py-2 rounded-full hover:scale-105 transition shadow-lg">
+                <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest mr-2">{{ user.username }}</span>
+                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-bold text-xs">
+                    {{ user.username|first|upper }}
+                </div>
+            </a>
+        </header>
+
+        <!-- Chat Area -->
+        <div class="flex-1 overflow-y-auto custom-scroll px-6 md:px-24 py-12" id="messages-container">
+            {% if not messages %}
+            <div class="h-full flex flex-col items-center justify-center text-center">
+                <h1 class="serif text-6xl mb-6 opacity-90">Hujambo.</h1>
+                <p class="text-white/40 max-w-sm italic font-light">Describe a NECTA topic to begin your personalized AI coaching session.</p>
+            </div>
+            {% else %}
+                {% for message in messages %}
+                <div class="flex {% if message.sender == 'user' %}justify-end{% else %}justify-start{% endif %} mb-10">
+                    <div class="max-w-2xl">
+                        <span class="text-[9px] uppercase tracking-[0.3em] opacity-30 mb-3 block {% if message.sender == 'user' %}text-right{% endif %}">
+                            {% if message.sender == 'user' %}Student{% else %}EDU-TZ AI{% endif %}
+                        </span>
+                        <div class="{% if message.sender == 'user' %}user-bubble{% else %}glass-bubble{% endif %} p-6 rounded-[28px] text-sm leading-relaxed">
+                            {{ message.text }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- Input Bar -->
+        <div class="p-10 flex justify-center">
+            <div class="max-w-4xl w-full glass-bubble rounded-full flex items-center px-8 py-3 border-none shadow-2xl">
+                <i class="fas fa-paperclip opacity-30 text-lg hover:opacity-100 cursor-pointer transition"></i>
+                <input type="text" id="msg-input" placeholder="Ask the Digital Brain..." 
+                       class="flex-1 bg-transparent border-none outline-none px-6 text-sm placeholder:text-white/20">
+                <button id="send-btn" class="w-12 h-12 bg-white text-[#7a7d91] rounded-full shadow-lg hover:scale-110 active:scale-95 transition">
+                    <i class="fas fa-arrow-up"></i>
+                </button>
+            </div>
+        </div>
     </main>
+
+    <script>
+        const msgInput = document.getElementById('msg-input');
+        const sendBtn = document.getElementById('send-btn');
+        const container = document.getElementById('messages-container');
+
+        sendBtn.addEventListener('click', send);
+        msgInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') send(); });
+
+        function send() {
+            const text = msgInput.value.trim();
+            if(!text) return;
+
+            const welcome = container.querySelector('.h-full');
+            if(welcome) welcome.remove();
+
+            append(text, 'user');
+            msgInput.value = '';
+
+            // Boxless Thinking Dots
+            const lid = 'l-' + Date.now();
+            container.insertAdjacentHTML('beforeend', `<div id="${lid}" class="flex flex-col items-start mb-10 ml-6"><span class="text-[8px] uppercase tracking-[0.4em] opacity-30 mb-2">Analyzing...</span><div class="thinking-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`);
+            container.scrollTop = container.scrollHeight;
+
+            fetch('{% url "send_message" %}', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
+                body: JSON.stringify({message: text})
+            })
+            .then(r => r.json())
+            .then(d => {
+                document.getElementById(lid).remove();
+                if(d.success) append(d.ai_message.text, 'ai');
+                else append("⚠️ " + d.error, 'ai');
+            });
+        }
+
+        function append(t, s) {
+            const wrap = document.createElement('div');
+            wrap.className = `flex ${s === 'user' ? 'justify-end' : 'justify-start'} mb-10`;
+            wrap.innerHTML = `<div class="max-w-2xl"><span class="text-[9px] uppercase tracking-[0.3em] opacity-30 mb-3 block ${s === 'user' ? 'text-right' : ''}">${s === 'user' ? 'Student' : 'EDU-TZ AI'}</span><div class="${s === 'user' ? 'user-bubble' : 'glass-bubble'} p-6 rounded-[28px] text-sm leading-relaxed">${t}</div></div>`;
+            container.appendChild(wrap);
+            container.scrollTop = container.scrollHeight;
+        }
+    </script>
 </body>
 </html>

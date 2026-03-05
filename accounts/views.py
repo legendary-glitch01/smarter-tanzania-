@@ -42,7 +42,13 @@ def login_view(request):
         
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
+            # Ensure user has a profile before logging in
+            try:
+                user.profile
+            except Profile.DoesNotExist:
+                Profile.objects.create(user=user, registration_method='email')
+            
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('chat_dashboard')
         else:
             messages.error(request, 'Invalid username or password')
@@ -84,8 +90,14 @@ def register_view(request):
         # Create user (Profile is auto-created by signal)
         user = User.objects.create_user(username=username, email=email, password=password)
         
+        # Ensure profile was created
+        try:
+            user.profile
+        except Profile.DoesNotExist:
+            Profile.objects.create(user=user, registration_method='email')
+        
         # Log them in
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('chat_dashboard')
     
     return render(request, 'accounts/register.html')
@@ -95,3 +107,10 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'You have been logged out')
     return redirect('landing_page')
+
+@login_required(login_url='login_page')
+def user_profile_view(request):
+    """Display user profile with account details"""
+    return render(request, 'accounts/profile.html', {
+        'user': request.user
+    })
